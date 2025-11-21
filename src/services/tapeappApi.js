@@ -1,6 +1,8 @@
 const FUNCTION_URL = '/.netlify/functions/submit-form';
 
 export async function submitToTapeApp(contactData) {
+	console.log('Submitting form data:', JSON.stringify(contactData));
+
 	const payload = {
 		name: contactData.firstName,
 		last_name: contactData.lastName,
@@ -9,8 +11,7 @@ export async function submitToTapeApp(contactData) {
 		notes: contactData.notes
 	};
 
-	console.log('Submitting form data:', contactData);
-	console.log('Sending payload to function:', payload);
+	console.log('Sending payload to function:', JSON.stringify(payload));
 
 	try {
 		const response = await fetch(FUNCTION_URL, {
