@@ -14,9 +14,10 @@ exports.handler = async (event) => {
 		const contactData = JSON.parse(event.body);
 		console.log('Parsed contact data:', JSON.stringify(contactData));
 
+		// Use the field names as they come from the form (name and last_name, not firstName/lastName)
 		const payload = {
-			name: contactData.firstName || '',
-			last_name: contactData.lastName || '',
+			name: contactData.name || '',
+			last_name: contactData.last_name || '',
 			email: contactData.email || '',
 			phone: contactData.phone || '',
 			notes: contactData.notes || ''
@@ -46,15 +47,15 @@ exports.handler = async (event) => {
 			};
 		}
 
-		const responseData = await response.json();
-		console.log('Webhook success response:', responseData);
+		// Webhook returns 200 but may not have JSON body
+		const responseText = await response.text();
+		console.log('Webhook response text:', responseText);
 
 		return {
 			statusCode: 200,
 			body: JSON.stringify({
 				success: true,
-				message: 'Form submitted successfully',
-				data: responseData
+				message: 'Form submitted successfully to Tape'
 			})
 		};
 	} catch (error) {

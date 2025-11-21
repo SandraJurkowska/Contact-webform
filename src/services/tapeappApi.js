@@ -9,7 +9,8 @@ export async function submitToTapeApp(contactData) {
 		notes: contactData.notes
 	};
 
-	console.log('Submitting payload:', payload);
+	console.log('Submitting form data:', contactData);
+	console.log('Sending payload to function:', payload);
 
 	try {
 		const response = await fetch(FUNCTION_URL, {
