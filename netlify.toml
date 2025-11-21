@@ -1,0 +1,12 @@
+[build]
+command = "npm run build"
+publish = "dist"
+
+[env]
+VITE_TAPEAPP_WORKSPACE_ID = "13661"
+VITE_TAPEAPP_APP_ID = "69278"
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
