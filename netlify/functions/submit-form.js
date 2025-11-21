@@ -12,17 +12,17 @@ exports.handler = async (event) => {
 	try {
 		console.log('Received event body:', event.body);
 		const contactData = JSON.parse(event.body);
-		console.log('Parsed contact data:', contactData);
+		console.log('Parsed contact data:', JSON.stringify(contactData));
 
 		const payload = {
-			name: contactData.firstName,
-			last_name: contactData.lastName,
-			email: contactData.email,
-			phone: contactData.phone,
-			notes: contactData.notes
+			name: contactData.firstName || '',
+			last_name: contactData.lastName || '',
+			email: contactData.email || '',
+			phone: contactData.phone || '',
+			notes: contactData.notes || ''
 		};
 
-		console.log('Sending payload to webhook:', payload);
+		console.log('Sending payload to webhook:', JSON.stringify(payload));
 
 		const response = await fetch(WEBHOOK_URL, {
 			method: 'POST',
