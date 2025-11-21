@@ -14,10 +14,11 @@ exports.handler = async (event) => {
 		const contactData = JSON.parse(event.body);
 		console.log('Parsed contact data:', JSON.stringify(contactData));
 
-		// Use the field names as they come from the form (name and last_name, not firstName/lastName)
+		// The client sends firstName/lastName, but we need to map them to name/last_name for Tape
+		// Check both possible field names in case of format differences
 		const payload = {
-			name: contactData.name || '',
-			last_name: contactData.last_name || '',
+			name: contactData.name || contactData.firstName || '',
+			last_name: contactData.last_name || contactData.lastName || '',
 			email: contactData.email || '',
 			phone: contactData.phone || '',
 			notes: contactData.notes || ''
