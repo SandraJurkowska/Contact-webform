@@ -157,6 +157,12 @@
 	}
 
 	.form-group {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	form > .form-group {
 		display: grid;
 		grid-template-columns: 120px 1fr;
 		gap: 12px;
@@ -164,7 +170,8 @@
 	}
 
 	.form-row .form-group {
-		grid-template-columns: 1fr;
+		display: flex;
+		flex-direction: column;
 		gap: 8px;
 	}
 
