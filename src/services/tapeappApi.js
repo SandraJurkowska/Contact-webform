@@ -1,11 +1,11 @@
-const WORKSPACE_ID = import.meta.env.VITE_TAPEAPP_WORKSPACE_ID;
-const APP_ID = import.meta.env.VITE_TAPEAPP_APP_ID;
+const WORKSPACE_ID = import.meta.env.VITE_TAPEAPP_WORKSPACE_ID || '13661';
+const APP_ID = import.meta.env.VITE_TAPEAPP_APP_ID || '69278';
 const API_KEY = import.meta.env.VITE_TAPEAPP_API_KEY;
 const API_BASE_URL = 'https://api.tapeapp.com/api/v1';
 
 export async function submitToTapeApp(contactData) {
 	if (!API_KEY) {
-		throw new Error('TapeApp API key is not configured. Please add VITE_TAPEAPP_API_KEY to your .env file.');
+		throw new Error('TapeApp API key is not configured. Environment variable VITE_TAPEAPP_API_KEY is missing.');
 	}
 
 	if (!WORKSPACE_ID || !APP_ID) {
