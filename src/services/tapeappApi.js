@@ -1,55 +1,22 @@
-const WORKSPACE_ID = import.meta.env.VITE_TAPEAPP_WORKSPACE_ID || '13661';
-const APP_ID = import.meta.env.VITE_TAPEAPP_APP_ID || '69278';
-const API_KEY = import.meta.env.VITE_TAPEAPP_API_KEY;
-const API_BASE_URL = 'https://api.tapeapp.com/api/v1';
+const WEBHOOK_URL = 'https://tapeapp.com/api/catch/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3b3JrZmxvd0RlZklkIjozNzIzNjcsIm9yZ2FuaXphdGlvbklkIjo4NzUsInNjb3BlIjoid2tyX3YxIn0.eqFMUU61kDwXG_FBVYJBAV17LYgBIECx_x9amcGb3w4';
 
 export async function submitToTapeApp(contactData) {
-	if (!API_KEY) {
-		throw new Error('TapeApp API key is not configured. Environment variable VITE_TAPEAPP_API_KEY is missing.');
-	}
-
-	if (!WORKSPACE_ID || !APP_ID) {
-		throw new Error('TapeApp workspace ID or app ID is not configured.');
-	}
-
 	const payload = {
-		fields: [
-			{
-				key: 'name',
-				value: contactData.firstName
-			},
-			{
-				key: 'last_name',
-				value: contactData.lastName
-			},
-			{
-				key: 'email',
-				value: contactData.email
-			},
-			{
-				key: 'phone',
-				value: contactData.phone
-			},
-			{
-				key: 'notes',
-				value: contactData.notes
-			}
-		]
+		firstName: contactData.firstName,
+		lastName: contactData.lastName,
+		email: contactData.email,
+		phone: contactData.phone,
+		notes: contactData.notes
 	};
 
 	try {
-		const response = await fetch(
-			`${API_BASE_URL}/workspaces/${WORKSPACE_ID}/apps/${APP_ID}/records`,
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${API_KEY}`
-				},
-				body: JSON.stringify(payload),
-				mode: 'cors'
-			}
-		);
+		const response = await fetch(WEBHOOK_URL, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(payload)
+		});
 
 		if (!response.ok) {
 			let errorData;
@@ -59,14 +26,14 @@ export async function submitToTapeApp(contactData) {
 				errorData = { message: response.statusText };
 			}
 			throw new Error(
-				errorData.message || `TapeApp API error: ${response.status} ${response.statusText}`
+				errorData.message || `Submission failed: ${response.status} ${response.statusText}`
 			);
 		}
 
 		return await response.json();
 	} catch (error) {
 		if (error instanceof TypeError) {
-			throw new Error('Network error: Unable to connect to TapeApp API. This may be a CORS issue or connection problem.');
+			throw new Error('Network error: Unable to connect to Tape. Please check your connection.');
 		}
 		throw error;
 	}
