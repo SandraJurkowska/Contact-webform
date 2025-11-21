@@ -1,4 +1,4 @@
-const WEBHOOK_URL = 'https://tapeapp.com/api/catch/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3b3JrZmxvd0RlZklkIjozNzIzNjcsIm9yZ2FuaXphdGlvbklkIjo4NzUsInNjb3BlIjoid2tyX3YxIn0.eqFMUU61kDwXG_FBVYJBAV17LYgBIECx_x9amcGb3w4';
+const FUNCTION_URL = '/.netlify/functions/submit-form';
 
 export async function submitToTapeApp(contactData) {
 	const payload = {
@@ -12,7 +12,7 @@ export async function submitToTapeApp(contactData) {
 	console.log('Submitting payload:', payload);
 
 	try {
-		const response = await fetch(WEBHOOK_URL, {
+		const response = await fetch(FUNCTION_URL, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
