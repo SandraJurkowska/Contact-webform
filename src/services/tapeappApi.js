@@ -2,8 +2,8 @@ const WEBHOOK_URL = 'https://tapeapp.com/api/catch/eyJhbGciOiJIUzI1NiIsInR5cCI6I
 
 export async function submitToTapeApp(contactData) {
 	const payload = {
-		firstName: contactData.firstName,
-		lastName: contactData.lastName,
+		name: contactData.firstName,
+		last_name: contactData.lastName,
 		email: contactData.email,
 		phone: contactData.phone,
 		notes: contactData.notes
