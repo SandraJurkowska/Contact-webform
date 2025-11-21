@@ -9,6 +9,8 @@ export async function submitToTapeApp(contactData) {
 		notes: contactData.notes
 	};
 
+	console.log('Submitting payload:', payload);
+
 	try {
 		const response = await fetch(WEBHOOK_URL, {
 			method: 'POST',
@@ -17,6 +19,8 @@ export async function submitToTapeApp(contactData) {
 			},
 			body: JSON.stringify(payload)
 		});
+
+		console.log('Webhook response status:', response.status);
 
 		if (!response.ok) {
 			let errorData;
@@ -30,8 +34,11 @@ export async function submitToTapeApp(contactData) {
 			);
 		}
 
-		return await response.json();
+		const responseData = await response.json();
+		console.log('Webhook response:', responseData);
+		return responseData;
 	} catch (error) {
+		console.error('Submission error:', error);
 		if (error instanceof TypeError) {
 			throw new Error('Network error: Unable to connect to Tape. Please check your connection.');
 		}
